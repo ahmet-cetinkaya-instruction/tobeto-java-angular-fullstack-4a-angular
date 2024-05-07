@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
+import { CommonModule } from '@angular/common';
 
 // Components: Angular tarafında görünüm ve işlev bakımından birer küçük parçacıklardır.
 @Component({
@@ -11,7 +14,7 @@ import { Component } from '@angular/core';
   // Her component'in kendi import'ı olabilir.
   // Böylece her component kendi başına Angulara dahil olabilir.
   standalone: true,
-  imports: [],
+  imports: [CommonModule, NavbarComponent, FooterComponent],
   // Import'larda bu componentte kullanmak adına Angular modüllerini sağlamış oluyoruz.
 
   templateUrl: './app.component.html', // HTML dosyası yolunu
@@ -19,10 +22,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   // Component'in class'ıyla dinamik yapıyı, temel işlev ve kararları yapabiliriz.
-  title = 'Northwind'; // State: Component'in sakladığı veri ve izlediği veri yapısı
+  readonly title: string = 'Northwind'; // State: Component'in sakladığı veri ve izlediği veri yapısı
+  counter: number = 0;
 
   onButtonClick() {
-    this.title = 'Northwind Ahmet'; // State'i güncelleyen fonksiyon
+    this.counter += 1; // State'i güncelleyen fonksiyon
     console.log('Button Clicked');
   }
 }

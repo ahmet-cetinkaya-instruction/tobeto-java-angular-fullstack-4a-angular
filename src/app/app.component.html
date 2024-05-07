@@ -1,2 +1,46 @@
+<app-navbar></app-navbar>
+
 <h1>Hello, {{ title }}</h1>
-<button (click)="onButtonClick()">Click me</button>
+
+<p>Counter: {{ counter }}</p>
+<button (click)="onButtonClick()">Arttır</button>
+
+<!-- < Angular 17 -->
+<!-- *ngIf -->
+<!-- Structural Directives: * ile başlayan directive'ler bizim için yapısal directive'lerdir. -->
+<!-- Bu element'in render'lanmasını ele alıyor ve yönetiyor. -->
+
+<!-- if (counter > 5) -->
+<ng-template>
+  <p *ngIf="counter > 5; else counterElse">Sayaç 5'den büyük.</p>
+
+  <ng-template #counterElse>
+    <!-- else -->
+    <!--      if (counter === 5) -->
+    <p *ngIf="counter === 5; else counterElseElse">Sayaç 5'e eşit.</p>
+    <!--      else -->
+
+    <ng-template #counterElseElse>
+      <p>Sayaç 5'ten küçük.</p>
+    </ng-template>
+  </ng-template>
+</ng-template>
+
+<!-- ng-template: Sadece özel olarak olarak çağırılarak renderlanabilen, bir template'i kapsayan angular elementidir. -->
+<ng-template #ngTemplateOrnek>
+  <p>Beni özel olarak çağırdın ve render olmamı sağladın.</p>
+</ng-template>
+<ng-container *ngTemplateOutlet="ngTemplateOrnek"></ng-container>
+<!-- ng-container: Angular tarafından renderlanmayan bir elementdir. Sadece içerisindeki elementleri renderlamak için kullanılır. -->
+<!-- Yani HTML içinde kendisini görmeyiz. -->
+
+<!-- > Angular 17 -->
+@if (counter > 5) {
+<p>Sayaç 5'den büyük.</p>
+} @else if (counter === 5) {
+<p>Sayaç 5'e eşit.</p>
+} @else {
+<p>Sayaç 5'ten küçük.</p>
+}
+
+<app-footer></app-footer>
