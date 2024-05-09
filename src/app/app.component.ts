@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 // Components: Angular tarafında görünüm ve işlev bakımından birer küçük parçacıklardır.
 @Component({
@@ -11,7 +12,7 @@ import { Component } from '@angular/core';
   // Her component'in kendi import'ı olabilir.
   // Böylece her component kendi başına Angulara dahil olabilir.
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   // Import'larda bu componentte kullanmak adına Angular modüllerini sağlamış oluyoruz.
 
   templateUrl: './app.component.html', // HTML dosyası yolunu
