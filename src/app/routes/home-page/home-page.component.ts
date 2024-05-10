@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { BasicLayoutComponent } from '../../shared/components/basic-layout/basic-layout.component';
 import { CategoryListGroupComponent } from '../../features/categories/components/category-list-group/category-list-group.component';
 import { ProductCardListComponent } from '../../features/products/components/product-card-list/product-card-list.component';
+import { CategoryListItem } from '../../features/categories/models/category-list-item';
 
 @Component({
   standalone: true,
@@ -12,10 +13,16 @@ import { ProductCardListComponent } from '../../features/products/components/pro
     RouterModule,
     BasicLayoutComponent,
     CategoryListGroupComponent,
-    ProductCardListComponent
+    ProductCardListComponent,
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomePageComponent {}
+export class HomePageComponent {
+  seletectedCategory: CategoryListItem | null = null;
+
+  onChangeSelectCategory(event: { selectedCategory: CategoryListItem | null }) {
+    this.seletectedCategory = event.selectedCategory;
+  }
+}

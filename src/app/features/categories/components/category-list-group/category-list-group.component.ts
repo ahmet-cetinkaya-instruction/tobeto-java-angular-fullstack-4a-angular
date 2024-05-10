@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { CategoryListItem } from '../../models/category-list-item';
 import {
   ListGroupComponent,
@@ -15,6 +20,10 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryListGroupComponent {
+  @Output() changeSelect = new EventEmitter<{
+    selectedCategory: CategoryListItem | null;
+  }>();
+
   categoryList: CategoryListItem[] = [
     { id: 1, name: 'Dairy' },
     { id: 2, name: 'Fruits' },
@@ -35,5 +44,14 @@ export class CategoryListGroupComponent {
       // Yeni bir array oluşturmak adına yeni değer geri döndürüldü.
       return listGroupItem;
     });
+  }
+
+  onChangeSelect(event: { selectedItemId: string | null }) {
+    const selectedCategory: CategoryListItem | null = event.selectedItemId
+      ? this.categoryList.find(
+          (category) => category.id === Number.parseInt(event.selectedItemId!)
+        )!
+      : null;
+    this.changeSelect.emit({ selectedCategory });
   }
 }

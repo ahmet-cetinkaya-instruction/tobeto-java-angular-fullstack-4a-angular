@@ -6,4 +6,8 @@
   }
 </ul> -->
 
-<app-list-group [items]="categoryListGroupItems"></app-list-group>
+<app-list-group
+  [items]="categoryListGroupItems"
+  (changeSelect)="onChangeSelect($event)"
+></app-list-group>
+<!-- $event: @Output ile gelen veriyi temsil eder. -->
