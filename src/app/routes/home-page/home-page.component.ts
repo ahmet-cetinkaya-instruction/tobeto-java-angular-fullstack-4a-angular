@@ -31,8 +31,6 @@ export class HomePageComponent implements OnInit {
   categoryIdFromRoute() {
     this.route.queryParams
       .subscribe((queryParams) => {
-        console.log('queryParams: ', queryParams);
-
         const categoryId: number | undefined = Number(queryParams['category']);
         if (categoryId)
           this.seletectedCategory = {
@@ -45,7 +43,6 @@ export class HomePageComponent implements OnInit {
 
   onChangeSelectCategory(event: { selectedCategory: CategoryListItem | null }) {
     this.seletectedCategory = event.selectedCategory;
-    console.log('event: ', event);
 
     const queryParams = {
       category: this.seletectedCategory?.id || null,

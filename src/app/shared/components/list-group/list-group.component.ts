@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
 
@@ -21,7 +22,8 @@ export interface ListGroupItem {
   styleUrl: './list-group.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListGroupComponent {
+export class ListGroupComponent implements OnInit {
+  @Input() initialSelectedItemId: string | null = null;
   @Input() items: ListGroupItem[] = []; // <app-list-group [items]="categoryListGroupItems"></app-list-group>
   // @Input: Bu component'in dışarıdan (kullanıldığı yerden) bir değer almasını sağlar.
   // State'in değerini dışarıdan (kullanıldığı yerden) da atanabilir hale getirir.
@@ -34,6 +36,11 @@ export class ListGroupComponent {
   // Component'in kullanıldığı yerde bu event'i dinleyen bir metot olabilir.
 
   selectedItemId: string | null = null;
+
+  ngOnInit(): void {
+    if (this.initialSelectedItemId)
+      this.selectedItemId = this.initialSelectedItemId;
+  }
 
   onListGroupItemClick(item: ListGroupItem) {
     this.selectedItemId = this.selectedItemId !== item.id ? item.id : null;

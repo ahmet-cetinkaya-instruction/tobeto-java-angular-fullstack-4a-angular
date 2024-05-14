@@ -13,6 +13,7 @@
     <div class="col-4 col-lg-3 col-xl-2">
       <h1 style="font-size: 2rem">Categories</h1>
       <app-category-list-group
+        [initialSelectedCategoryId]="seletectedCategory?.id ?? null"
         (changeSelect)="onChangeSelectCategory($event)"
       ></app-category-list-group>
     </div>

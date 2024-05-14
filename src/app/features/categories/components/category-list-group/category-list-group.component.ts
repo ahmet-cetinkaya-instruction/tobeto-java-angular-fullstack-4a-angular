@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Input,
   Output,
 } from '@angular/core';
 import { CategoryListItem } from '../../models/category-list-item';
@@ -20,6 +21,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryListGroupComponent {
+  @Input() initialSelectedCategoryId: number | null = null;
   @Output() changeSelect = new EventEmitter<{
     selectedCategory: CategoryListItem | null;
   }>();
