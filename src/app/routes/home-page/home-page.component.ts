@@ -5,6 +5,7 @@ import { BasicLayoutComponent } from '../../shared/components/basic-layout/basic
 import { CategoryListGroupComponent } from '../../features/categories/components/category-list-group/category-list-group.component';
 import { ProductCardListComponent } from '../../features/products/components/product-card-list/product-card-list.component';
 import { CategoryListItem } from '../../features/categories/models/category-list-item';
+import { ProductListItem } from '../../features/products/models/product-list-item';
 
 @Component({
   standalone: true,
@@ -50,5 +51,9 @@ export class HomePageComponent implements OnInit {
     this.router.navigate([], {
       queryParams,
     });
+  }
+
+  onViewProduct(event: ProductListItem) {
+    this.router.navigate(['products', event.id]); // localhost:4200/products/5
   }
 }

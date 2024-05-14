@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { ProductListItem } from '../../models/product-list-item';
 import { CardComponent } from '../../../../shared/components/card/card.component';
 
@@ -13,6 +19,7 @@ import { CardComponent } from '../../../../shared/components/card/card.component
 })
 export class ProductCardListComponent {
   @Input() filterByCategoryId: number | null = null;
+  @Output() viewProduct = new EventEmitter<ProductListItem>();
 
   productList: ProductListItem[] = [
     {
@@ -72,6 +79,10 @@ export class ProductCardListComponent {
       imageUrl: 'https://picsum.photos/500',
     },
   ]; // Mock data //TODO: Get from backend
+
+  onViewProduct(product: ProductListItem) {
+    this.viewProduct.emit(product);
+  }
 
   get filteredProductList(): ProductListItem[] {
     let filteredCategoryList = this.productList;

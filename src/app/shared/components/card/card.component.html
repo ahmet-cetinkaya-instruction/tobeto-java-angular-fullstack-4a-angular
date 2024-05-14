@@ -10,6 +10,8 @@
     <p class="card-text">
       {{ description }}
     </p>
-    <button type="button" class="btn btn-primary">{{ buttonLabel }}</button>
+    <button type="button" (click)="onButtonClick()" class="btn btn-primary">
+      {{ buttonLabel }}
+    </button>
   </div>
 </div>

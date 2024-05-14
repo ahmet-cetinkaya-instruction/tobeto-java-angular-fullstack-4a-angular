@@ -22,6 +22,7 @@
       <h1 style="font-size: 2rem">Products</h1>
       <app-product-card-list
         [filterByCategoryId]="seletectedCategory?.id ?? null"
+        (viewProduct)="onViewProduct($event)"
       ></app-product-card-list>
     </div>
   </div>

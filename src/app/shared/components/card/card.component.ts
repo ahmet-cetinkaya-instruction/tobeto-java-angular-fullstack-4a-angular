@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-card',
@@ -15,5 +21,10 @@ export class CardComponent {
   @Input() title?: string;
   @Input() description?: string;
   @Input() buttonLabel?: string;
+  @Output() buttonClick = new EventEmitter<void>();
   @Input() imageHeight: number = 200;
+
+  onButtonClick() {
+    this.buttonClick.emit();
+  }
 }
