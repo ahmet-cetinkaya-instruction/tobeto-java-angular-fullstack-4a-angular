@@ -13,18 +13,27 @@ export class ProductsService {
 
   constructor(private http: HttpClient) {}
 
-  getList(): Observable<ProductListItem[]> {
-    return this.http.get<ProductListItem[]>(this.apiControllerUrl).pipe(
-      // pipe: Bir veya daha fazla operatörü birbirine bağlar. Böylece Observable yapıların davranışını değiştirilebilir. https://rxjs.dev/api/operators/
+  getList(filterByCategoryId: number | null): Observable<ProductListItem[]> {
+    let queryParams: any = {};
+    if (filterByCategoryId) {
+      queryParams.categoryId = filterByCategoryId.toString();
+    }
 
-      map((data) => {
-        for (const product of data) {
-          product.imageUrl = 'https://via.placeholder.com/500';
-        }
-        return data;
-        // map: Bir veri akıştan başka bir veri akışa dönüşüm yapar. https://rxjs.dev/api/operators/map
+    return this.http
+      .get<ProductListItem[]>(this.apiControllerUrl, {
+        params: queryParams,
       })
-    );
+      .pipe(
+        // pipe: Bir veya daha fazla operatörü birbirine bağlar. Böylece Observable yapıların davranışını değiştirilebilir. https://rxjs.dev/api/operators/
+
+        map((data) => {
+          for (const product of data) {
+            product.imageUrl = 'https://via.placeholder.com/500';
+          }
+          return data;
+          // map: Bir veri akıştan başka bir veri akışa dönüşüm yapar. https://rxjs.dev/api/operators/map
+        })
+      );
 
     const subject = new Subject<ProductListItem[]>();
     // Subject: Veri akışını olduğunda, hata olduğunda ve tamamlandığında gözlemleyenlere haber veren bir yapıdır.

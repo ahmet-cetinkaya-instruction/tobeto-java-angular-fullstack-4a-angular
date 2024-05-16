@@ -21,7 +21,7 @@ import { ProductListItem } from '../../features/products/models/product-list-ite
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePageComponent implements OnInit {
-  seletectedCategory: CategoryListItem | null = null;
+  seletectedCategoryId: number | null = null;
 
   constructor(private router: Router, private route: ActivatedRoute) {}
 
@@ -33,20 +33,16 @@ export class HomePageComponent implements OnInit {
     this.route.queryParams
       .subscribe((queryParams) => {
         const categoryId: number | undefined = Number(queryParams['category']);
-        if (categoryId)
-          this.seletectedCategory = {
-            id: categoryId,
-            name: '',
-          };
+        if (categoryId) this.seletectedCategoryId = categoryId;
       })
       .unsubscribe();
   }
 
   onChangeSelectCategory(event: { selectedCategory: CategoryListItem | null }) {
-    this.seletectedCategory = event.selectedCategory;
+    this.seletectedCategoryId = event.selectedCategory?.id || null;
 
     const queryParams = {
-      category: this.seletectedCategory?.id || null,
+      category: this.seletectedCategoryId,
     };
     this.router.navigate([], {
       queryParams,

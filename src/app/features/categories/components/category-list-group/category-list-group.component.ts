@@ -1,9 +1,12 @@
+import { CategoriesService } from './../../services/categories.service';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
 import { CategoryListItem } from '../../models/category-list-item';
@@ -20,19 +23,29 @@ import {
   styleUrl: './category-list-group.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CategoryListGroupComponent {
+export class CategoryListGroupComponent implements OnInit {
   @Input() initialSelectedCategoryId: number | null = null;
   @Output() changeSelect = new EventEmitter<{
     selectedCategory: CategoryListItem | null;
   }>();
 
-  categoryList: CategoryListItem[] = [
-    { id: 1, name: 'Dairy' },
-    { id: 2, name: 'Fruits' },
-    { id: 3, name: 'Vegetables' },
-    { id: 4, name: 'Meat' },
-    { id: 5, name: 'Fish' },
-  ]; // This is a mock data //TODO: get data from backend
+  categoryList!: CategoryListItem[];
+
+  constructor(
+    private categoriesService: CategoriesService,
+    private change: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.getCategoryList();
+  }
+
+  getCategoryList() {
+    this.categoriesService.getList().subscribe((categoryList) => {
+      this.categoryList = categoryList;
+      this.change.markForCheck();
+    });
+  }
 
   get categoryListGroupItems(): ListGroupItem[] {
     // map: array içindeki her bir elemanı dönüp yeni değerlerle, yeni bir array oluşturur.
