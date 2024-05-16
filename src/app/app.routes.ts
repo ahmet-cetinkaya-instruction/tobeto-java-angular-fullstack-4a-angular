@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomePageComponent } from './routes/home-page/home-page.component';
 import { authRoutes } from './routes/auth/auth.routes';
 import { productsRoutes } from './routes/products/products.routes';
+import { categoriesRoutes } from './routes/categories/categories.routes';
 
 export const routes: Routes = [
   {
@@ -10,5 +11,6 @@ export const routes: Routes = [
   },
 
   ...authRoutes, // ... spread operatörü ile authRoutes array'ini routes array'ine ekliyoruz.
-  ...productsRoutes
+  ...productsRoutes,
+  ...categoriesRoutes,
 ];
