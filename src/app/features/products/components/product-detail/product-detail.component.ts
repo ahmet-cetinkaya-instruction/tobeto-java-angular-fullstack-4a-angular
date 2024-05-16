@@ -6,7 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { ProductsService } from '../../services/products.service';
-import { ProductListItem } from '../../models/product-list-item';
+import { ProductDetails } from '../../models/product-details';
 
 @Component({
   selector: 'app-product-detail',
@@ -19,7 +19,7 @@ import { ProductListItem } from '../../models/product-list-item';
 export class ProductDetailComponent implements OnInit {
   @Input() productId!: number;
 
-  productDetails!: ProductListItem;
+  productDetails!: ProductDetails;
 
   constructor(private productsService: ProductsService) {}
 
@@ -27,7 +27,9 @@ export class ProductDetailComponent implements OnInit {
     this.getProductDetails();
   }
   getProductDetails() {
-    const productDetails = this.productsService.getById(this.productId);
-    if (productDetails) this.productDetails = productDetails;
+    this.productsService.getById(this.productId).subscribe((productDetail) => {
+      this.productDetails = productDetail;
+      // OnPush
+    });
   }
 }

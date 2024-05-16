@@ -1,4 +1,4 @@
-export interface ProductListItem {
+export interface ProductDetails {
   id: number;
   supplierId: number;
   categoryId: number;

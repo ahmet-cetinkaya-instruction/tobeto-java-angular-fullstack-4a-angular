@@ -1,11 +1,11 @@
 <div class="d-flex flex-wrap gap-4">
-  @for (product of filteredProductList; track $index) {
+  @for (product of productList; track $index) {
   <app-card
     [title]="product.name"
     [imageSrc]="product.imageUrl"
     [imageAlt]="product.name"
-    [description]="product.description"
-    [buttonLabel]="'View - ' + (product.price | currency)"
+    [description]="product.quantityPerUnit"
+    [buttonLabel]="'View - ' + (product.unitPrice| currency)"
     (buttonClick)="onViewProduct(product)"
   ></app-card>
   }

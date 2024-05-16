@@ -13,10 +13,10 @@
   <div class="col">
     <h1>{{ productDetails.name }}</h1>
 
-    <p>{{ productDetails.description }}</p>
+    <p>{{ productDetails.quantityPerUnit }}</p>
 
     <button class="btn btn-primary btn-lg mt-4">
-      Add to Cart - {{ productDetails.price | currency }}
+      Add to Cart - {{ productDetails.unitPrice | currency }}
     </button>
   </div>
 </div>

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -25,29 +26,27 @@ export class ProductCardListComponent implements OnInit {
 
   productList!: ProductListItem[];
 
-  constructor(private productsService: ProductsService) {}
+  constructor(private productsService: ProductsService, private change:ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.getProductList();
   }
 
   getProductList() {
-    this.productList = this.productsService.getList();
+    this.productsService.getList().subscribe({
+      next: (productList) => {
+        console.log('component:', productList);
+
+        this.productList = productList;
+        this.change.markForCheck();
+      },
+      error: (error) => {
+        console.error('There was an error!', error);
+      },
+    });
   }
 
   onViewProduct(product: ProductListItem) {
     this.viewProduct.emit(product);
-  }
-
-  get filteredProductList(): ProductListItem[] {
-    let filteredCategoryList = this.productList;
-
-    if (this.filterByCategoryId) {
-      filteredCategoryList = this.productList.filter(
-        (product) => product.categoryId === this.filterByCategoryId
-      );
-    }
-
-    return filteredCategoryList;
   }
 }
