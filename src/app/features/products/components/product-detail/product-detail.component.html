@@ -15,7 +15,7 @@
 
     <p>{{ productDetails.quantityPerUnit }}</p>
 
-    <button class="btn btn-primary btn-lg mt-4">
+    <button class="btn btn-primary btn-lg mt-4" (click)="onButtonClick()">
       Add to Cart - {{ productDetails.unitPrice | currency }}
     </button>
   </div>

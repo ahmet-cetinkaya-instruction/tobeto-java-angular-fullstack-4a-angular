@@ -51,6 +51,11 @@ export class ProductsService {
   }
 
   getById(id: number): Observable<ProductDetails> {
-    return this.http.get<ProductDetails>(`${this.apiControllerUrl}/${id}`);
+    return this.http.get<ProductDetails>(`${this.apiControllerUrl}/${id}`).pipe(
+      map((data) => {
+        data.imageUrl = 'https://via.placeholder.com/500';
+        return data;
+      })
+    );
   }
 }

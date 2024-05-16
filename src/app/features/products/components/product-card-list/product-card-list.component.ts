@@ -35,8 +35,6 @@ export class ProductCardListComponent implements OnInit {
   getProductList() {
     this.productsService.getList().subscribe({
       next: (productList) => {
-        console.log('component:', productList);
-
         this.productList = productList;
         this.change.markForCheck();
       },
