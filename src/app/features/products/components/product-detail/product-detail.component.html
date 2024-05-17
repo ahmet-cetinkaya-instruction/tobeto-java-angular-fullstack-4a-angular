@@ -15,8 +15,10 @@
 
     <p>{{ productDetails.quantityPerUnit }}</p>
 
+    <p appHighlight="red" hoverColor="blue" class="display-6">{{ productDetails.unitPrice | appVat | currency }}</p>
+
     <button class="btn btn-primary btn-lg mt-4" (click)="onButtonClick()">
-      Add to Cart - {{ productDetails.unitPrice | currency }}
+      Add to Cart
     </button>
   </div>
 </div>

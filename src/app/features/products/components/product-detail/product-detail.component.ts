@@ -8,11 +8,13 @@ import {
 } from '@angular/core';
 import { ProductsService } from '../../services/products.service';
 import { ProductDetails } from '../../models/product-details';
+import { VatPipe } from '../../pipes/vat.pipe';
+import { HighlightDirective } from '../../../../shared/directives/highlight.directive';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, VatPipe, HighlightDirective],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

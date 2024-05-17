@@ -5,7 +5,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
-  declarations: [NavbarComponent, FooterComponent, BasicLayoutComponent],  // Bir component standolone değilse declarations kısmında tanımlanmalıdır.
+  declarations: [NavbarComponent, FooterComponent, BasicLayoutComponent],  // Bir component (template tarafında kullanılan Angular bileşenleri) standolone değilse declarations kısmında tanımlanmalıdır.
   // declarations kısmında eklenen componentler, aynı yerde tanımlandıkları için, birbirlerini kullanabilirler.
 
   imports: [CommonModule], // imports kısmında modül tanımlamaları yapılır.
