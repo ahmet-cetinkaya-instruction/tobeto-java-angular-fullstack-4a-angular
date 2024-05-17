@@ -1,18 +1,18 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { BasicLayoutComponent } from '../../shared/components/basic-layout/basic-layout.component';
 import { CategoryListGroupComponent } from '../../features/categories/components/category-list-group/category-list-group.component';
 import { ProductCardListComponent } from '../../features/products/components/product-card-list/product-card-list.component';
 import { CategoryListItem } from '../../features/categories/models/category-list-item';
 import { ProductListItem } from '../../features/products/models/product-list-item';
+import { SharedModule } from '../../shared/shared.module';
 
 @Component({
   standalone: true,
   imports: [
-    CommonModule,
+    // CommonModule, // SharedModule içerisinde olduğu için burada tekrar eklemeye gerek yok.
     RouterModule,
-    BasicLayoutComponent,
+    // BasicLayoutComponent,
+    SharedModule,
     CategoryListGroupComponent,
     ProductCardListComponent,
   ],
