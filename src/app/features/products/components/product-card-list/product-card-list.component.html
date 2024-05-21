@@ -1,3 +1,4 @@
+@if(productList){
 <div class="d-flex flex-wrap gap-4">
   @for (product of productList.items; track $index) {
   <app-card
@@ -9,6 +10,14 @@
     (buttonClick)="onViewProduct(product)"
   ></app-card>
   }
-
-  <app-pagination></app-pagination>
 </div>
+
+<div class="mt-4">
+  <app-pagination
+    [pageIndex]="productList.pageIndex"
+    [pageSize]="productList.pageSize"
+    [totalItems]="productList.totalCount"
+    (changePage)="onChangePage($event)"
+  ></app-pagination>
+</div>
+}

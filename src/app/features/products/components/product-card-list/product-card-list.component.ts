@@ -38,7 +38,7 @@ export class ProductCardListComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     // ngOnInit: Angular bileşeninin yerleştiridiğinde çalışan bir yaşam döngüsü olayıdır.
-    this.getProductList();
+    this.getProductList(0, 12);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -48,16 +48,12 @@ export class ProductCardListComponent implements OnInit, OnChanges {
       changes['filterByCategoryId'].previousValue !==
         changes['filterByCategoryId'].currentValue
     )
-      this.getProductList();
+      this.getProductList(0, 12);
   }
 
-  getProductList() {
+  getProductList(pageIndex: number, pageSize: number) {
     this.productsService
-      .getList(
-        this.productList?.pageIndex ?? 0,
-        this.productList?.pageSize || 12,
-        this.filterByCategoryId
-      )
+      .getList(pageIndex, pageSize, this.filterByCategoryId)
       .subscribe({
         next: (productList) => {
           this.productList = productList;
@@ -71,5 +67,9 @@ export class ProductCardListComponent implements OnInit, OnChanges {
 
   onViewProduct(product: ProductListItem) {
     this.viewProduct.emit(product);
+  }
+
+  onChangePage(requestedPageIndex: number) {
+    this.getProductList(requestedPageIndex, this.productList.pageSize);
   }
 }
