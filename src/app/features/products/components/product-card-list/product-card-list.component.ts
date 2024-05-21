@@ -14,11 +14,13 @@ import { ProductListItem } from '../../models/product-list-item';
 import { CardComponent } from '../../../../shared/components/card/card.component';
 import { ProductsService } from '../../services/products.service';
 import { VatPipe } from '../../pipes/vat.pipe';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination.component';
+import { PaginatedList } from '../../../../core/models/paginated-list';
 
 @Component({
   selector: 'app-product-card-list',
   standalone: true,
-  imports: [CommonModule, CardComponent, VatPipe],
+  imports: [CommonModule, CardComponent, VatPipe, PaginationComponent],
   templateUrl: './product-card-list.component.html',
   styleUrl: './product-card-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,7 +29,7 @@ export class ProductCardListComponent implements OnInit, OnChanges {
   @Input() filterByCategoryId: number | null = null;
   @Output() viewProduct = new EventEmitter<ProductListItem>();
 
-  productList!: ProductListItem[];
+  productList!: PaginatedList<ProductListItem>;
 
   constructor(
     private productsService: ProductsService,
@@ -50,15 +52,21 @@ export class ProductCardListComponent implements OnInit, OnChanges {
   }
 
   getProductList() {
-    this.productsService.getList(this.filterByCategoryId).subscribe({
-      next: (productList) => {
-        this.productList = productList;
-        this.change.markForCheck();
-      },
-      error: (error) => {
-        console.error('There was an error!', error);
-      },
-    });
+    this.productsService
+      .getList(
+        this.productList?.pageIndex ?? 0,
+        this.productList?.pageSize || 12,
+        this.filterByCategoryId
+      )
+      .subscribe({
+        next: (productList) => {
+          this.productList = productList;
+          this.change.markForCheck();
+        },
+        error: (error) => {
+          console.error('There was an error!', error);
+        },
+      });
   }
 
   onViewProduct(product: ProductListItem) {

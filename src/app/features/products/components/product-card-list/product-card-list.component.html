@@ -1,5 +1,5 @@
 <div class="d-flex flex-wrap gap-4">
-  @for (product of productList; track $index) {
+  @for (product of productList.items; track $index) {
   <app-card
     [title]="product.name | uppercase"
     [imageSrc]="product.imageUrl"
@@ -9,4 +9,6 @@
     (buttonClick)="onViewProduct(product)"
   ></app-card>
   }
+
+  <app-pagination></app-pagination>
 </div>
