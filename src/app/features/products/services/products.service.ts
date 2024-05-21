@@ -32,9 +32,10 @@ export class ProductsService {
         // pipe: Bir veya daha fazla operatörü birbirine bağlar. Böylece Observable yapıların davranışını değiştirilebilir. https://rxjs.dev/api/operators/
         // map: Bir veri akıştan başka bir veri akışa dönüşüm yapar. https://rxjs.dev/api/operators/map
 
+        //! Aşağıdaki işlemleri geçici olarak FE tarafında gerçeleştirdik. Daha sonra BE tarafında, veri tabanı üzerinden gerçekleştirilmesi gerekmektedir.
+
         // Pagination
         map((response) => {
-          // Geçici olarak FE tarafında gerçeleştirdik. Daha sonra BE tarafında, veri tabanı üzerinden gerçekleştirilecek.
           const paginatedList: PaginatedList<ProductListItem> = {
             items: response.slice(
               pageIndex * pageSize,
