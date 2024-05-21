@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CategoryListGroupComponent } from '../../features/categories/components/category-list-group/category-list-group.component';
 import { ProductCardListComponent } from '../../features/products/components/product-card-list/product-card-list.component';
@@ -6,6 +11,7 @@ import { CategoryListItem } from '../../features/categories/models/category-list
 import { ProductListItem } from '../../features/products/models/product-list-item';
 import { SharedModule } from '../../shared/shared.module';
 import { IfNotDirective } from '../../shared/directives/if-not.directive';
+import { take } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -24,14 +30,26 @@ import { IfNotDirective } from '../../shared/directives/if-not.directive';
 })
 export class HomePageComponent implements OnInit {
   seletectedCategoryId: number | null = null;
-
+  initialPageIndex: number | null = null;
   isOldUser: boolean = false;
 
-  constructor(private router: Router, private route: ActivatedRoute, private change:ChangeDetectorRef) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private change: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.categoryIdFromRoute();
+    this.getProductInitialPageIndexFromRoute();
     this.detectNewUser();
+  }
+
+  getProductInitialPageIndexFromRoute() {
+    this.route.queryParams.pipe(take(1)).subscribe((queryParams) => {
+      const pageIndex: number | undefined = Number(queryParams['pageIndex']);
+      if (pageIndex) this.initialPageIndex = pageIndex;
+    });
   }
 
   detectNewUser() {
@@ -58,15 +76,29 @@ export class HomePageComponent implements OnInit {
   onChangeSelectCategory(event: { selectedCategory: CategoryListItem | null }) {
     this.seletectedCategoryId = event.selectedCategory?.id || null;
 
-    const queryParams = {
-      category: this.seletectedCategoryId,
-    };
-    this.router.navigate([], {
-      queryParams,
+    this.route.queryParams.pipe(take(1)).subscribe((queryParams) => {
+      const newQueryParams = { ...queryParams };
+      newQueryParams['category'] = this.seletectedCategoryId || undefined;
+      newQueryParams['pageIndex'] = undefined;
+
+      this.router.navigate([], {
+        queryParams: newQueryParams,
+      });
     });
   }
 
   onViewProduct(event: ProductListItem) {
     this.router.navigate(['products', event.id]); // localhost:4200/products/5
+  }
+
+  onProductPageChange(productPageIndex: number) {
+    this.route.queryParams.pipe(take(1)).subscribe((queryParams) => {
+      const newQueryParams = { ...queryParams };
+      newQueryParams['pageIndex'] = productPageIndex || undefined;
+
+      this.router.navigate([], {
+        queryParams: newQueryParams,
+      });
+    });
   }
 }

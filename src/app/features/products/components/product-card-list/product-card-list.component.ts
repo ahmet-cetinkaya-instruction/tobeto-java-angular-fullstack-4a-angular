@@ -28,6 +28,8 @@ import { PaginatedList } from '../../../../core/models/paginated-list';
 export class ProductCardListComponent implements OnInit, OnChanges {
   @Input() filterByCategoryId: number | null = null;
   @Output() viewProduct = new EventEmitter<ProductListItem>();
+  @Input() initialPageIndex: number = 0;
+  @Output() changePage = new EventEmitter<number>();
 
   productList!: PaginatedList<ProductListItem>;
 
@@ -38,7 +40,7 @@ export class ProductCardListComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     // ngOnInit: Angular bileşeninin yerleştiridiğinde çalışan bir yaşam döngüsü olayıdır.
-    this.getProductList(0, 12);
+    this.getProductList(this.initialPageIndex, 12);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -71,5 +73,6 @@ export class ProductCardListComponent implements OnInit, OnChanges {
 
   onChangePage(requestedPageIndex: number) {
     this.getProductList(requestedPageIndex, this.productList.pageSize);
+    this.changePage.emit(requestedPageIndex);
   }
 }
