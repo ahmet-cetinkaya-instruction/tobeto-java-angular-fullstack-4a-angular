@@ -9,6 +9,11 @@ import { AUTH_ERROR_REDIRECT_URL_TOKEN } from '../providers/auth.provider';
 // CanDeactivate: Route'dan ayrılmadan önce kullanıcıya bir onay verme şansı verir.
 // CanMatch: Route'ın path'inin eşleşip eşleşmediğini belirler.
 
+export const routeDataKey = 'securedRoute';
+export interface SecuredRoute {
+  reqiredRoleIds: number[];
+}
+
 export const securedRouteGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
@@ -19,6 +24,14 @@ export const securedRouteGuard: CanActivateFn = (route, state) => {
   if (!authService.isAuthenticated) {
     router.navigateByUrl(authErrorRedirectUrl);
     return false;
+  }
+
+  if (route.data[routeDataKey]) {
+    const { requiredRoleIds } = route.data[routeDataKey];
+    if (!authService.isAuthorized(requiredRoleIds)) {
+      router.navigateByUrl(authErrorRedirectUrl);
+      return false;
+    }
   }
 
   return true; // true dönüldüğünde route izin verilir, false dönüldüğünde route engellenir
