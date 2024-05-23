@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { MyAccountPageComponent } from './my-account-page/my-account-page.component';
 import { AdminPanelPageComponent } from './admin-panel-page/admin-panel-page.component';
+import { securedRouteGuard } from '../../core/auth/guards/secured-route.guard';
 
 export const authRoutes: Routes = [
   {
@@ -10,6 +11,7 @@ export const authRoutes: Routes = [
   },
   {
     path: 'my-account',
+    canActivate: [securedRouteGuard],
     component: MyAccountPageComponent,
   },
   {

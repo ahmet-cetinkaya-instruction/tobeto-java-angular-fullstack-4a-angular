@@ -4,22 +4,21 @@ import { Observable, tap } from 'rxjs';
 import { LoggedUser } from '../models/logged-user';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
+import { AuthService as CoreAuthService } from '../../../core/auth/services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthService extends CoreAuthService {
   private apiControllerUrl = `${environment.apiUrl}/auth`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    super();
+  }
 
   login(loginCredentials: LoginCredentials): Observable<LoggedUser> {
     return this.http
       .post<LoggedUser>(`${this.apiControllerUrl}/login`, loginCredentials)
-      .pipe(tap((loggedUser) => this.saveToken(loggedUser.access_token)));
-  }
-
-  private saveToken(token: string) {
-    localStorage.setItem('access_token', token);
+      .pipe(tap((loggedUser) => (this.token = loggedUser.access_token)));
   }
 }
