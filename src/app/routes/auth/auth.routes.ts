@@ -16,6 +16,7 @@ export const authRoutes: Routes = [
   },
   {
     path: 'admin-panel',
+    canActivate: [securedRouteGuard],
     component: AdminPanelPageComponent,
   },
 ];
