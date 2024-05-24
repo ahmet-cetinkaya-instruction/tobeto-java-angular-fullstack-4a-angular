@@ -75,7 +75,7 @@ export class AuthService {
     this._isLogged.next(false);
   }
 
-  protected get token(): string | null {
+  public get token(): string | null {
     return this.localStorage?.getItem('access_token') ?? null;
   }
 

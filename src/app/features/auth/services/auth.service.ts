@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { AuthService as CoreAuthService } from '../../../core/auth/services/auth.service';
 import { DOCUMENT } from '@angular/common';
+import { SecretMessage } from '../models/secret-message';
 
 @Injectable({
   providedIn: 'root',
@@ -27,5 +28,13 @@ export class AuthService extends CoreAuthService {
           this._isLogged.next(true);
         })
       );
+  }
+
+  test(): Observable<SecretMessage> {
+    return this.http.get<SecretMessage>(`${this.apiControllerUrl}/test`);
+  }
+
+  testAdmin(): Observable<SecretMessage> {
+    return this.http.get<SecretMessage>(`${this.apiControllerUrl}/test-admin`);
   }
 }

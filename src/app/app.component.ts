@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AuthService } from './features/auth/services/auth.service';
 
 // Components: Angular tarafında görünüm ve işlev bakımından birer küçük parçacıklardır.
 @Component({
@@ -18,4 +19,16 @@ import { RouterModule } from '@angular/router';
   templateUrl: './app.component.html', // HTML dosyası yolunu
   styleUrl: './app.component.scss', // Stil dosya yolunu
 })
-export class AppComponent {}
+export class AppComponent implements OnInit {
+  constructor(private authService:AuthService) {}
+
+  ngOnInit(): void {
+    this.authService.test().subscribe((response) => {
+      console.log(response);
+    });
+
+    this.authService.testAdmin().subscribe((response) => {
+      console.log(response);
+    });
+  }
+}
