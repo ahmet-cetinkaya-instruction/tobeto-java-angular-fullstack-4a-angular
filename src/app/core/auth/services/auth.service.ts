@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { AccessTokenPayload } from '../models/access-token-payload';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -18,12 +19,18 @@ export class AuthService {
   }
 
   // BehaviorSubject: Subject sınıfının bir alt sınıfıdır. BehaviorSubject, bir başlangıç değeri alır ve bu değeri subscribe olan dinleyicilere hemen iletir. Daha sonra yeni değerler geldiğinde bu değerleri dinleyicilere iletir.
-  protected readonly _isLogged = new BehaviorSubject<boolean>(this.isAuthenticated);
+  protected readonly _isLogged = new BehaviorSubject<boolean>(
+    this.isAuthenticated
+  );
   public get isLogged(): Observable<boolean> {
     return this._isLogged.asObservable();
   }
 
-  constructor() {}
+  constructor(@Inject(DOCUMENT) protected document: Document) {}
+
+  protected get localStorage(): Storage | undefined {
+    return this.document.defaultView?.localStorage;
+  }
 
   public get tokenPayload(): AccessTokenPayload | null {
     if (!this.token) return null;
@@ -63,16 +70,16 @@ export class AuthService {
   }
 
   public logout(): void {
-    localStorage.removeItem('access_token');
+    this.localStorage?.removeItem('access_token');
     this._loggedOut.next();
     this._isLogged.next(false);
   }
 
   protected get token(): string | null {
-    return localStorage.getItem('access_token');
+    return this.localStorage?.getItem('access_token') ?? null;
   }
 
   protected set token(token: string) {
-    localStorage.setItem('access_token', token);
+    this.localStorage?.setItem('access_token', token);
   }
 }
