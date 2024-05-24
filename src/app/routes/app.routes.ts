@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { authRoutes } from './routes/auth/auth.routes';
-import { productsRoutes } from './routes/products/products.routes';
-import { categoriesRoutes } from './routes/categories/categories.routes';
-import { BasicLayoutComponent } from './shared/components/basic-layout/basic-layout.component';
-import { HomePageComponent } from './routes/home-page/home-page.component';
+import { authRoutes } from './auth/auth.routes';
+import { productsRoutes } from './products/products.routes';
+import { categoriesRoutes } from './categories/categories.routes';
+import { BasicLayoutComponent } from '../shared/components/basic-layout/basic-layout.component';
+import { HomePageComponent } from './home-page/home-page.component';
 
 export const routes: Routes = [
   {

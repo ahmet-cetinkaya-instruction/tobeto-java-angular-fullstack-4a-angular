@@ -10,7 +10,6 @@ import { CategoryListGroupComponent } from '../../features/categories/components
 import { ProductCardListComponent } from '../../features/products/components/product-card-list/product-card-list.component';
 import { CategoryListItem } from '../../features/categories/models/category-list-item';
 import { ProductListItem } from '../../features/products/models/product-list-item';
-import { SharedModule } from '../../shared/shared.module';
 import { IfNotDirective } from '../../shared/directives/if-not.directive';
 import { take } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
@@ -21,7 +20,6 @@ import { DOCUMENT } from '@angular/common';
     // CommonModule, // SharedModule içerisinde olduğu için burada tekrar eklemeye gerek yok.
     RouterModule,
     // BasicLayoutComponent,
-    SharedModule,
     CategoryListGroupComponent,
     ProductCardListComponent,
     IfNotDirective,
@@ -34,6 +32,9 @@ export class HomePageComponent implements OnInit {
   seletectedCategoryId: number | null = null;
   initialPageIndex: number | null = null;
   isOldUser: boolean = false;
+  get now() {
+    return new Date();
+  }
 
   constructor(
     private router: Router,
