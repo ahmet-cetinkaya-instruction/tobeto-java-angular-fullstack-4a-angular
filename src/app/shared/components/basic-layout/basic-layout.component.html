@@ -1,4 +1,4 @@
-<div class="d-flex flex-column min-vh-100">
+<div class="d-flex flex-column min-vh-100 nw-container">
   <header>
     <app-navbar></app-navbar>
   </header>
@@ -6,6 +6,7 @@
   <main class="container flex-grow-1 py-2">
     <ng-content></ng-content>
     <!-- Bu componenti içerisine yerleştirilen template buraya alacaktır. -->
+    <router-outlet></router-outlet>
   </main>
 
   <!-- HTML Semantic HTML Tags -->

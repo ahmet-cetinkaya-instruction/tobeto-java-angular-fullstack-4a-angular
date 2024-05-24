@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 type ButtonType = 'button' | 'submit' | 'reset';
 type ButtonVariant =
@@ -25,6 +25,7 @@ export class ButtonComponent {
   @Input() type: ButtonType = 'button';
   @Input() variant: ButtonVariant = 'primary';
   @Input() className?: string;
+  @Output() clickButton = new EventEmitter<MouseEvent>();
 
   get buttonClass(): string {
     let className = `btn btn-${this.variant}`;
