@@ -19,6 +19,12 @@ export class AuthService extends CoreAuthService {
   login(loginCredentials: LoginCredentials): Observable<LoggedUser> {
     return this.http
       .post<LoggedUser>(`${this.apiControllerUrl}/login`, loginCredentials)
-      .pipe(tap((loggedUser) => (this.token = loggedUser.access_token)));
+      .pipe(
+        tap((loggedUser) => {
+          this.token = loggedUser.access_token;
+          this._logged.next();
+          this._isLogged.next(true);
+        })
+      );
   }
 }
